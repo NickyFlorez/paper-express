@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrito de compras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 antialiased text-gray-900">
+    <div class="min-h-screen flex flex-col md:flex-row md:space-x-6 p-4 md:p-8">
+      <!-- Lista de productos -->
+      <div class="flex-1 bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-semibold mb-4">Carrito de compras</h1>
+
+        <!-- Producto -->
+        @for (product of products(); track $index) {
+        <div class="divide-y">
+          <div class="flex items-center py-4">
+            <img
+              [src]="product.imageUrl"
+              alt="Producto 1"
+              class="w-20 h-20 object-cover rounded"
+            />
+            <div class="ml-4 flex-1">
+              <h2 class="text-lg font-medium">{{ product.title }}</h2>
+              <p class="text-sm text-gray-500">
+                {{ product.description }}
+              </p>
+              <p class="mt-1 font-semibold">{{ product.price }}$</p>
+            </div>
+          </div>
+        </div>
+        }@empty {
+        <p>
+          No tienes productos agregados. Puede agregar desde
+          <span class="text-primary font-bold" routerLink="/products"
+            >aquí</span
+          >
+        </p>
+        }
+      </div>
+
+      <!-- Resumen del carrito -->
+      <div class="md:w-80 mt-6 md:mt-0 bg-white rounded-lg shadow p-6 h-fit">
+        <h2 class="text-xl font-semibold mb-4">Resumen</h2>
+        <div class="flex justify-between text-gray-600 mb-2">
+          <span>Subtotal</span>
+          <span>{{ total }}$</span>
+        </div>
+        <div class="flex justify-between text-gray-600 mb-2">
+          <span>Envío</span>
+          <span>5000$</span>
+        </div>
+        <div class="flex justify-between font-semibold text-gray-800 mb-4">
+          <span>Total</span>
+          <span>{{ total + 5000 }}$</span>
+        </div>
+        <button
+          (click)="pay()"
+          class="w-full bg-primary cursor-pointer hover:bg-primary-content text-white py-2 rounded"
+        >
+          Proceder al pago
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
